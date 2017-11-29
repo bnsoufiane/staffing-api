@@ -1,0 +1,1954 @@
+{
+  "info": {
+    "title": "Staffing API",
+    "description": "Staffing API Sandbox",
+    "version": "1.0.0"
+  },
+  "schemes": [
+    "https"
+  ],
+  "basePath": "/api",
+  "swagger": "2.0",
+  "paths": {
+    "/businesses": {
+      "get": {
+        "tags": [
+          "business"
+        ],
+        "summary": "List businesses by query",
+        "description": "List businesses by query. if no query is sent, list all businesses",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Business"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/candidates": {
+      "get": {
+        "tags": [
+          "Candidate"
+        ],
+        "summary": "List all candidates",
+        "description": "List all candidates.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Candidate"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Candidate"
+        ],
+        "summary": "Create candidate",
+        "description": "Create candidate profile with form fields",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "avatar",
+            "in": "formData",
+            "description": "Candidate avatar",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "interviewVideo",
+            "in": "formData",
+            "description": "Candidate interview video",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "fullname",
+            "in": "formData",
+            "description": "Full name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "in": "formData",
+            "description": "Location",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Candidate title",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roles",
+            "in": "formData",
+            "description": "List of role ids (Stringified array of roles)",
+            "required": true,
+            "type": "array"
+          },
+          {
+            "name": "skillset",
+            "in": "formData",
+            "description": "Stringified array of skillset",
+            "required": true,
+            "type": "array"
+          },
+          {
+            "name": "pastCompanies",
+            "in": "formData",
+            "description": "Past companies in which he worked (Stringified array of pastCompanies)",
+            "required": true,
+            "type": "array"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Candidate"
+            }
+          },
+          "400": {
+            "description": "error creating"
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Candidate"
+        ],
+        "summary": "Update candidate",
+        "description": "Update proposal",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Candidate"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/candidates/:id": {
+      "get": {
+        "tags": [
+          "Candidate"
+        ],
+        "summary": "Get candidate by id",
+        "description": "Get candidate by id",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Candidate"
+            }
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Candidate"
+        ],
+        "summary": "Delete candidate by id",
+        "description": "Delete candidate by id",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Candidate"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/companies": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "List companies by query",
+        "description": "List companies by query. if no query is sent, list all companies",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Update company info",
+        "description": "Update company info and store in edit layer without changing original info",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "_id",
+            "type": "string",
+            "description": "_id of company document",
+            "required": true
+          },
+          {
+            "name": "source",
+            "type": "string",
+            "description": "Who is editing. It will be user when editing from client forms. Or it can by any scrape source like crunchbase, craft etc",
+            "required": true
+          },
+          {
+            "name": "companyName",
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "name": "foundersNames",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "in": "formData"
+          },
+          {
+            "name": "categories",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "keyPeople",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "schema": {
+                "$ref": "#/definitions/KeyPeople"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/images": {
+      "post": {
+        "tags": [
+          "Image"
+        ],
+        "summary": "Create a new image",
+        "description": "Create a new image",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "thumbnail",
+            "in": "formData",
+            "description": "Candidate avatar",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "url",
+            "in": "formData",
+            "description": "Url of the image",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Title of the image",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "Description of the image",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Candidate"
+            }
+          },
+          "400": {
+            "description": "error creating"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/images/base64": {
+      "get": {
+        "imgurl": "the url to the image we want to convert to base64",
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "returns": "string (image in base64 format)"
+          },
+          "400": {
+            "description": "error creating"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/jobs": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "summary": "List jobs by query",
+        "description": "List jobs by query. if no query is sent, list all jobs",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Job"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/proposals": {
+      "get": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "List all proposals",
+        "description": "List all proposals.",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Proposal"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Create proposal",
+        "description": "Create proposal with form fields",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": {
+          "name": {
+            "type": "string"
+          },
+          "subhead": {
+            "type": "string"
+          },
+          "overview": {
+            "type": "string"
+          },
+          "overview_inactive": {
+            "type": "boolean"
+          },
+          "scope_of_work": {
+            "type": "string"
+          },
+          "scope_of_work_inactive": {
+            "type": "boolean"
+          },
+          "inserts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "schema": {
+                "$ref": "#/definitions/Insert"
+              }
+            }
+          },
+          "inserts_inactive": {
+            "type": "boolean"
+          },
+          "breakdown": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Breakdown"
+            }
+          },
+          "breakdown_inactive": {
+            "type": "boolean"
+          },
+          "timeline": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Breakdown"
+            }
+          },
+          "timeline_inactive": {
+            "type": "boolean"
+          },
+          "steps": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Steps"
+            }
+          },
+          "steps_inactive": {
+            "type": "boolean"
+          },
+          "candidate_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "required": true
+            }
+          },
+          "candidate_ids_inactive": {
+            "type": "boolean"
+          },
+          "portfolio_ids": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "portfolio_ids_inactive": {
+            "type": "boolean"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Proposal"
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Create proposal",
+        "description": "Create proposal with form fields",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": {
+          "_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "subhead": {
+            "type": "string"
+          },
+          "overview": {
+            "type": "string"
+          },
+          "overview_inactive": {
+            "type": "boolean"
+          },
+          "scope_of_work": {
+            "type": "string"
+          },
+          "scope_of_work_inactive": {
+            "type": "boolean"
+          },
+          "inserts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "schema": {
+                "$ref": "#/definitions/Insert"
+              }
+            }
+          },
+          "inserts_inactive": {
+            "type": "boolean"
+          },
+          "breakdown": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Breakdown"
+            }
+          },
+          "breakdown_inactive": {
+            "type": "boolean"
+          },
+          "timeline": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Breakdown"
+            }
+          },
+          "timeline_inactive": {
+            "type": "boolean"
+          },
+          "steps": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Steps"
+            }
+          },
+          "steps_inactive": {
+            "type": "boolean"
+          },
+          "candidate_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "required": true
+            }
+          },
+          "candidate_ids_inactive": {
+            "type": "boolean"
+          },
+          "portfolio_ids": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "portfolio_ids_inactive": {
+            "type": "boolean"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Proposal"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal error"
+          }
+        }
+      }
+    },
+    "/proposals/:id": {
+      "get": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Get proposal by id",
+        "description": "Get proposal by id",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/Proposal"
+            }
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Proposal"
+        ],
+        "summary": "Delete proposal by id",
+        "description": "Delete proposal by id",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation."
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/roles": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "List all roles",
+        "description": "List all roles",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation."
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/scrape": {
+      "get": {
+        "tags": [
+          "Scrape"
+        ],
+        "summary": "Scrape a web site",
+        "description": "Scrape a web site by company type.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "types",
+            "in": "formData",
+            "description": "scrape type which also represent company",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "terms",
+            "in": "formData",
+            "description": "Search terms.",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "formData",
+            "description": "limit how many records to scrap",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation."
+          },
+          "400": {
+            "description": "error fetching"
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/scrape/companies": {
+      "get": {
+        "tags": [
+          "Scrape companies"
+        ],
+        "summary": "Scrape companies from the specified source.",
+        "description": "Scrape companies from the specified source, crunchBase by default.",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "category",
+            "in": "request.query",
+            "description": "companies category/market/industry we want to scrape, default to all",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "source",
+            "in": "request.query",
+            "description": "website we want to do the scraping from. default to crunchBase",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "request.query",
+            "description": "limit how many records to scrape, default to 1000",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation."
+          },
+          "400": {
+            "description": "error fetching"
+          },
+          "401": {
+            "description": "unauthorized"
+          },
+          "404": {
+            "description": "not found"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Create a user",
+        "description": "Create user with form fields",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "User email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "User password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Updates a current user",
+        "description": "Updates a current user",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "User email",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "User password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "422": {
+            "description": "Unable to update user."
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Deletes a current user",
+        "description": "Deletes a current user",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "422": {
+            "description": "Unable to update user."
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/users/current": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Return current user details",
+        "description": "Return current user details",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/users/forgot-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Send Reset Password Email",
+        "description": "Send Reset Password Email",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "Username",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "422": {
+            "description": "Unable to update user."
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/users/reset-password/:token": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Reset Password with taken",
+        "description": "Reset Password with taken",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "formData",
+            "description": "Token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Password",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "password_confirmation",
+            "in": "formData",
+            "description": "Confirmation password",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Invalid request"
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/users/exists": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Checks if a given user exists",
+        "description": "Checks if a given user exists",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "formData",
+            "description": "username",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "email",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    },
+    "/users/:userId": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user by ID",
+        "description": "Get user by ID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "formData",
+            "description": "userId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Operation.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "500": {
+            "description": "internal error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OpeningHours": {
+      "type": "object",
+      "properties": {
+        "mon": {
+          "type": "string"
+        },
+        "tue": {
+          "type": "string"
+        },
+        "wed": {
+          "type": "string"
+        },
+        "thu": {
+          "type": "string"
+        },
+        "fri": {
+          "type": "string"
+        },
+        "sat": {
+          "type": "string"
+        },
+        "sun": {
+          "type": "string"
+        }
+      }
+    },
+    "Rating": {
+      "type": "object",
+      "properties": {
+        "five": {
+          "type": "string"
+        },
+        "four": {
+          "type": "string"
+        },
+        "three": {
+          "type": "string"
+        },
+        "two": {
+          "type": "string"
+        },
+        "one": {
+          "type": "string"
+        }
+      }
+    },
+    "keyValue": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "Business": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "owners": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "street": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "state": {
+          "type": "string"
+        },
+        "postalCode": {
+          "type": "string"
+        },
+        "neighborhood": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "coordinates": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "partOfChain": {
+          "type": "boolean"
+        },
+        "facebook": {
+          "type": "string"
+        },
+        "twitter": {
+          "type": "string"
+        },
+        "yelpUrl": {
+          "type": "string"
+        },
+        "yelpAvatar": {
+          "type": "string"
+        },
+        "priceRange": {
+          "type": "string"
+        },
+        "priceDescription": {
+          "type": "string"
+        },
+        "healthInspection": {
+          "type": "string"
+        },
+        "hours": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/OpeningHours"
+          }
+        },
+        "reviews": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/Rating"
+          }
+        },
+        "yelpingSince": {
+          "type": "string"
+        },
+        "additionalInfo": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/keyValue"
+            }
+          }
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    },
+    "Company": {
+      "type": "object",
+      "properties": {
+        "companyName": {
+          "type": "string"
+        },
+        "foundersNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "cityHeadQuartersIn": {
+          "type": "string"
+        },
+        "numberOfEmployees": {
+          "type": "number"
+        },
+        "websiteLink": {
+          "type": "string"
+        },
+        "fundingRounds": {
+          "type": "number"
+        },
+        "fundingAmount": {
+          "type": "string"
+        },
+        "lastFundingDate": {
+          "type": "string"
+        },
+        "dateFounded": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "angelId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "acquisitionsNumber": {
+          "type": "string"
+        },
+        "linkedInURL": {
+          "type": "string"
+        },
+        "twitterURL": {
+          "type": "string"
+        },
+        "facebookURL": {
+          "type": "string"
+        },
+        "youtubeURL": {
+          "type": "string"
+        },
+        "instagramURL": {
+          "type": "string"
+        },
+        "angelURL": {
+          "type": "string"
+        },
+        "crunchBaseURL": {
+          "type": "string"
+        },
+        "craftURL": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "keyPeople": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/KeyPeople"
+            }
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "logos": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Logos"
+            }
+          }
+        },
+        "otherLocations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "edits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Edits"
+            }
+          }
+        }
+      }
+    },
+    "SkillSet": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Candidate": {
+      "type": "object",
+      "required": [
+        "roles"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "avatar": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/Image"
+          }
+        },
+        "interviewVideo": {
+          "type": "string"
+        },
+        "fullname": {
+          "type": "imageSchema"
+        },
+        "location": {
+          "type": "string"
+        },
+        "title": {
+          "type": "imageSchema"
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "skillset": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/SkillSet"
+          }
+        },
+        "pastCompanies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Company"
+            }
+          }
+        }
+      }
+    },
+    "KeyPeople": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "linkedIn": {
+          "type": "string"
+        },
+        "facebook": {
+          "type": "string"
+        },
+        "twitter": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "other": {
+          "type": "string"
+        }
+      }
+    },
+    "Logos": {
+      "type": "object",
+      "properties": {
+        "craftLogo": {
+          "type": "string"
+        },
+        "crunchBaseLogo": {
+          "type": "string"
+        }
+      }
+    },
+    "Edits": {
+      "type": "object",
+      "properties": {
+        "companyName": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "numberOfEmployees": {
+          "type": "number"
+        },
+        "dateFounded": {
+          "type": "string"
+        },
+        "websiteLink": {
+          "type": "string"
+        },
+        "linkedInURL": {
+          "type": "string"
+        },
+        "twitterURL": {
+          "type": "string"
+        },
+        "facebookURL": {
+          "type": "string"
+        },
+        "fundingAmount": {
+          "type": "string"
+        },
+        "fundingRounds": {
+          "type": "number"
+        },
+        "lastRound": {
+          "type": "string"
+        },
+        "foundersNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "keyPeople": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/KeyPeople"
+            }
+          }
+        },
+        "source": {
+          "type": "string"
+        },
+        "revenue": {
+          "type": "string"
+        }
+      }
+    },
+    "Image": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "thumbnail": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "Job": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "jobLink": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "company": {
+          "type": "string"
+        },
+        "companyLink": {
+          "type": "string"
+        },
+        "location": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        }
+      }
+    },
+    "Funding": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        },
+        "round": {
+          "type": "string"
+        },
+        "investor": {
+          "type": "string"
+        }
+      }
+    },
+    "Acquisition": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "date": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    },
+    "OwlerCompany": {
+      "type": "object",
+      "properties": {
+        "companyName": {
+          "type": "string"
+        },
+        "websiteLink": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "logo": {
+          "type": "string"
+        },
+        "dateFounded": {
+          "type": "string"
+        },
+        "categories": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "status": {
+          "type": "string"
+        },
+        "revenue": {
+          "type": "string"
+        },
+        "numberOfEmployees": {
+          "type": "number"
+        },
+        "funding": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Funding"
+            }
+          }
+        },
+        "acquisitions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Acquisition"
+            }
+          }
+        },
+        "acquisitionsNumber": {
+          "type": "string"
+        },
+        "keyPeople": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/KeyPeople"
+            }
+          }
+        },
+        "foundersNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "linkedInURL": {
+          "type": "string"
+        },
+        "twitterURL": {
+          "type": "string"
+        },
+        "facebookURL": {
+          "type": "string"
+        },
+        "youtubeURL": {
+          "type": "string"
+        },
+        "instagramURL": {
+          "type": "string"
+        },
+        "owlerURL": {
+          "type": "string"
+        },
+        "headquartersAddress": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string"
+        }
+      }
+    },
+    "Breakdown": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "row": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Insert": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "paragraph": {
+          "type": "string"
+        }
+      }
+    },
+    "Steps": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "header": "string",
+              "paragraph": "string"
+            }
+          }
+        }
+      }
+    },
+    "Proposal": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "subhead": {
+          "type": "string"
+        },
+        "overview": {
+          "type": "string"
+        },
+        "overview_inactive": {
+          "type": "boolean"
+        },
+        "scope_of_work": {
+          "type": "string"
+        },
+        "scope_of_work_inactive": {
+          "type": "boolean"
+        },
+        "inserts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "schema": {
+              "$ref": "#/definitions/Insert"
+            }
+          }
+        },
+        "inserts_inactive": {
+          "type": "boolean"
+        },
+        "breakdown": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/Breakdown"
+          }
+        },
+        "breakdown_inactive": {
+          "type": "boolean"
+        },
+        "timeline": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/Breakdown"
+          }
+        },
+        "timeline_inactive": {
+          "type": "boolean"
+        },
+        "steps": {
+          "type": "object",
+          "schema": {
+            "$ref": "#/definitions/Steps"
+          }
+        },
+        "steps_inactive": {
+          "type": "boolean"
+        },
+        "candidate_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "required": true
+          }
+        },
+        "candidate_ids_inactive": {
+          "type": "boolean"
+        },
+        "portfolio_ids": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "portfolio_ids_inactive": {
+          "type": "boolean"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "required": [
+        "username",
+        "resetPasswordToken",
+        "resetPasswordExpiresAt"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "resetPasswordToken": {
+          "type": "string"
+        },
+        "resetPasswordExpiresAt": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "responses": {},
+  "parameters": {},
+  "securityDefinitions": {}
+}

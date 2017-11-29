@@ -1,0 +1,16 @@
+# [START app_yaml]
+runtime: nodejs
+vm: true
+
+env_variables:
+  AWS_ACCESS_KEY: 'ADD INFO HERE'
+  AWS_SECRET: 'ADD INFO HERE'
+  APP_ENV: 'production'
+  SENDGRID_API_KEY: 'ADD INFO HERE'
+  MONGO_DB: 'staffing'
+  MONGO_SERVER: '104.154.52.147:27017'
+  GCLOUD_PROJECT: 'punch-staffing'
+  BACKEND: 'mongodb'
+
+vm_health_check:
+  enable_health_check: false
